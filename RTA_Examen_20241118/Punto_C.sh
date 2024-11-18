@@ -1,33 +1,44 @@
-#!/bin/bash
+# Editando el html con los datos requeridos
 
-echo "Ejecutando Punto_C.sh"
+vim index.html 
 
-# Definir variables
-REPO_PATH="/UTN-FRA_SO_Examenes/202406/docker"
-DOCKER_IMAGE_NAME="web1-Galarza"
-DOCKER_HUB_USERNAME="19801975"  # Tu nombre de usuario de Docker Hub
+<div>
+<h1> Arquitectura y Sistemas Operativos - UTNFRA </h1></br>
+<h2> 2do Parcial - Junio del 2024 </h2> </br>
+<h3> Galarza Pablo Agustin</h3>
+<h3> División:311 TN</h3>
+</div>
 
-# Crear el archivo index.html con el mensaje de bienvenida
-echo "<h1>Bienvenidos a la página de Pablo Agustin Galarza</h1>" > "$REPO_PATH/index.html"
+:wq
+
 
 # Crear el Dockerfile
 echo -e "FROM nginx\nCOPY index.html /usr/share/nginx/html/index.html" > "$REPO_PATH/Dockerfile"
 
-# Construir la imagen de Docker
-docker build -t "$DOCKER_HUB_USERNAME/$DOCKER_IMAGE_NAME" "$REPO_PATH"
 
-# Iniciar sesión en Docker Hub (pedirás la contraseña cuando se ejecute)
-docker login -u "$DOCKER_HUB_USERNAME" -p "<docker-password>"
+# Log en Docker
 
-# Subir la imagen a Docker Hub
-docker push "$DOCKER_HUB_USERNAME/$DOCKER_IMAGE_NAME"
+docker login -u 19801975 
+#Token de acceso
 
-# Crear el script run.sh para ejecutar el contenedor
-echo "#!/bin/bash" > "$REPO_PATH/run.sh"
-echo "docker run -d -p 8080:80 $DOCKER_HUB_USERNAME/$DOCKER_IMAGE_NAME" >> "$REPO_PATH/run.sh"
+# Construir imagen y pushearla
 
-# Dar permisos de ejecución al script run.sh
-chmod +x "$REPO_PATH/run.sh"
+docker build -t web1-GalarzaPablo:latest .
+docker image list
+docker tag web1-GalarzaPablo:latest 19801975/web1-GalarzaPablo:latest
+docker push 19801975/web1-GalarzaPablo
 
-echo "Fin del script"
 
+# Crear el archivo run.sh
+touch run.sh
+
+# Editar el archivo run.sh
+vim run.sh
+
+#!/bin/bash
+docker run -d -p 8080:80 19801975/web1-GalarzaPablo:latest
+
+:wq
+
+# Damos permisos de ejecución al archivo run.sh
+chmod +x run.sh
