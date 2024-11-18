@@ -1,2 +1,9 @@
-# UTNFRA_SO_2do_Parcial_Galarza
-Repositorio Arquitectura de SO 2do parcial
+Segundo Parcial de Arquitectura y sistemas operativos.
+
+Nombre: Pablo Agustin
+
+Apellido: Galarza
+
+Legajo: 117770
+
+División: 311
